@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        requestLocationPermission();
     }
     void loginUser(){
         String email = emailEditText.getText().toString();
@@ -140,6 +142,13 @@ public class LoginActivity extends AppCompatActivity {
             }
             loginHistoryRef.add(loginDetails);
         });
+    }
+
+    void requestLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
     }
 
     @Override

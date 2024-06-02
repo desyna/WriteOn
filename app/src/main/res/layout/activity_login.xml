@@ -5,102 +5,125 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginVertical="16dp"
-    android:layout_marginHorizontal="32dp"
+    android:background="@color/white"
     tools:context=".LoginActivity">
-    <ImageView
-        android:layout_width="264dp"
-        android:layout_height="264dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginVertical="32dp"
-        android:id="@+id/sign_in_image"
-        android:contentDescription="TODO"
-        android:src="@drawable/signup"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_in_text"
-        android:layout_below="@+id/sign_in_image"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="32dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textStyle="normal"
-            android:textSize="32sp"
-            android:textColor="@color/black"
-            android:gravity="center"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/form"
-        android:layout_below="@id/sign_in_text"
-        android:layout_marginVertical="12dp"
-        android:orientation="vertical">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_email_login"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_corner"
-            android:padding="16dp"
-            android:layout_marginTop="12dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_password_login"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_corner"
-            android:padding="16dp"
-            android:layout_marginTop="12dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:id="@+id/login_btn"
-            android:text="Login"
-            android:layout_marginTop="12dp"
-            android:textSize="16sp"/>
-
-        <ProgressBar
-            android:layout_width="24dp"
-            android:layout_height="64dp"
-            android:id="@+id/progress_bar"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_marginTop="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/form"
-        android:orientation="horizontal"
-        android:layout_marginTop="32dp"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Don't have account? "/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/create_now_btn"
+            android:text="WritOn"
+            android:gravity="center"
             android:textStyle="bold"
+            android:id="@+id/title"
             android:textColor="@color/purple"
-            android:text="Create Now"/>
-    </LinearLayout>
+            android:textSize="24sp"/>
+
+        <ImageView
+            android:layout_width="264dp"
+            android:layout_height="264dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="32dp"
+            android:id="@+id/sign_in_image"
+            android:layout_below="@+id/title"
+            android:contentDescription="TODO"
+            android:src="@drawable/signup"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_in_text"
+            android:layout_below="@+id/sign_in_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textStyle="bold"
+                android:textSize="32sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/form"
+            android:layout_below="@id/sign_in_text"
+            android:layout_marginVertical="12dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_email_login"
+                android:inputType="textEmailAddress"
+                android:hint="Email"
+                android:textColor="@color/gray_dark"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corner"
+                android:padding="16dp"
+                android:layout_marginTop="12dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_password_login"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:textSize="20sp"
+                android:textColor="@color/gray_dark"
+                android:background="@drawable/rounded_corner"
+                android:padding="16dp"
+                android:layout_marginTop="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:id="@+id/login_btn"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp"/>
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="64dp"
+                android:id="@+id/progress_bar"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/form"
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have account? "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_now_btn"
+                android:textStyle="bold"
+                android:textColor="@color/purple"
+                android:text="Create Now"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

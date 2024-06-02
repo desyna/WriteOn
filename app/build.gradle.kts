@@ -48,7 +48,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
-    implementation("com.google.firebase:firebase-auth:21.0.6")
-    implementation("com.google.firebase:firebase-firestore:24.0.2")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
 }

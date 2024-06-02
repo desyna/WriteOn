@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.Query;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     NoteAdapter noteAdapter;
     FloatingActionButton addNote;
     RecyclerView recyclerView;
-    ImageButton menuBtn;
+    ImageButton menuBtn, profileBtn;
     LinearLayout menuFav, menuNote;
+    private TextView profileNameTextView;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +39,27 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        FirebaseApp.initializeApp(this);
+
         addNote = findViewById(R.id.add_note);
         recyclerView = findViewById(R.id.recycle_view);
         menuBtn = findViewById(R.id.menu_btn);
         menuFav = findViewById(R.id.favorite);
         menuNote = findViewById(R.id.notes);
+        profileBtn = findViewById(R.id.profile_btn);
+        profileNameTextView = findViewById(R.id.user);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        profileNameTextView.setText(user.getDisplayName());
 
         addNote.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, NoteDetailActivity.class)));
-//        menuBtn.setOnClickListener((v)-> showMenu());
         menuBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, MenuActivity.class)));
         setupRecycleView();
         menuFav.setOnClickListener((v) -> startActivity(new Intent(MainActivity.this, FavoriteActivity.class)));
         menuNote.setOnClickListener((v) -> startActivity(new Intent(MainActivity.this, AllNoteActivity.class)));
+        profileBtn.setOnClickListener((v) -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -54,23 +67,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
-
-//    void showMenu(){
-//        PopupMenu popupMenu = new PopupMenu(MainActivity.this, menuBtn);
-//        popupMenu.getMenu().add("Logout");
-//        popupMenu.show();
-//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                if (item.getTitle() == "Logout"){
-//                    FirebaseAuth.getInstance().signOut();
-//                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//    }
 
     void setupRecycleView(){
         Query query = Utility.getCollectionReferenceForNotes().orderBy("timestamp", Query.Direction.DESCENDING);

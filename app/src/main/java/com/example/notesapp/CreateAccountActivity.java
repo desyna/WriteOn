@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -68,21 +70,38 @@ public class CreateAccountActivity extends AppCompatActivity {
         changeInProgress(true);
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 changeInProgress(false);
                 if (task.isSuccessful()){
-                    Utility.showToast(CreateAccountActivity.this, "Succesfully create acount, check email to verify");
-                    firebaseAuth.getCurrentUser().sendEmailVerification();
-                    firebaseAuth.signOut();
-                    finish();
-                }else {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    if (user != null) {
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .build();
+
+                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> profileTask) {
+                                if (profileTask.isSuccessful()) {
+                                    Utility.showToast(CreateAccountActivity.this, "Successfully created account, check email to verify");
+                                    user.sendEmailVerification();
+                                    firebaseAuth.signOut();
+                                    finish();
+                                } else {
+                                    Utility.showToast(CreateAccountActivity.this, "Failed to update profile: " + profileTask.getException().getLocalizedMessage());
+                                }
+                            }
+                        });
+                    }
+                } else {
                     Utility.showToast(CreateAccountActivity.this, task.getException().getLocalizedMessage());
                 }
             }
         });
     }
+
 
     void changeInProgress(boolean inProgress){
         if(inProgress){

@@ -15,15 +15,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class LoginHistoryAdapter extends FirestoreRecyclerAdapter<LoginHistory, LoginHistoryAdapter.LoginHistoryViewHolder> {
 
     Context context;
+    Set<String> uniqueDevices = new HashSet<>();
     public LoginHistoryAdapter(@NonNull FirestoreRecyclerOptions<LoginHistory> options, Context context) {
         super(options);
         this.context = context;
+        filterUniqueDevices();
     }
 
     @NonNull
@@ -44,6 +48,25 @@ public class LoginHistoryAdapter extends FirestoreRecyclerAdapter<LoginHistory, 
         holder.addressTextView.setText(address);
     }
 
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        filterUniqueDevices();
+    }
+
+    private void filterUniqueDevices() {
+        uniqueDevices.clear();
+        for (int i = 0; i < getItemCount(); i++) {
+            LoginHistory loginHistory = getItem(i);
+            String deviceKey = loginHistory.getDeviceName() + "_" + loginHistory.getLatitude() + "_" + loginHistory.getLongitude();
+            if (!uniqueDevices.add(deviceKey)) {
+                // Remove duplicate device entries
+                getSnapshots().getSnapshot(i).getReference().delete();
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     class LoginHistoryViewHolder extends RecyclerView.ViewHolder {
         TextView timestampTextView, deviceNameTextView, locationTextView, addressTextView;
 
@@ -56,7 +79,7 @@ public class LoginHistoryAdapter extends FirestoreRecyclerAdapter<LoginHistory, 
         }
     }
 
-    private String getAddressFromLocation(Context context, double latitude, double longitude) {
+    public String getAddressFromLocation(Context context, double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);

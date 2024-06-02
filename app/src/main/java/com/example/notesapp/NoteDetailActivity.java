@@ -38,7 +38,6 @@ public class NoteDetailActivity extends AppCompatActivity {
         contentEditText = findViewById(R.id.note_content);
         saveBtn = findViewById(R.id.save_btn);
         backBtn = findViewById(R.id.back_btn);
-//        pageTitleTextView = findViewById(R.id.note_title);
         favoriteBtn = findViewById(R.id.fav_btn);
         deleteNoteTextViewBtn = findViewById(R.id.delete_note);
 
@@ -90,7 +89,7 @@ public class NoteDetailActivity extends AppCompatActivity {
     void saveNoteToFirebase(Note note){
         DocumentReference documentReference;
         if (isEditMode){
-//          // update note
+            // update note
             documentReference = Utility.getCollectionReferenceForNotes().document(docId);
         }else {
             //create new note
